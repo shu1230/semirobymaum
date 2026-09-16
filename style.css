@@ -787,7 +787,7 @@ body.mode-artist .selectable-target:active {
     max-width: 265px; /* 오른쪽 말풍선 최대 너비 (원하는 비율로 수정) */
 }
 .message-group.right-align .bubble-white {
-    background-color: #646464; /* 오른쪽 배경색 (예: 카카오톡 노란색) */
+    background-color: #9ac0c4; /* 오른쪽 배경색 (예: 카카오톡 노란색) */
     color: #fff; /* 오른쪽 글자색 */
 }
 
