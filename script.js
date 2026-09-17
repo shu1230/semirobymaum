@@ -64,10 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnConfirmAccept = document.getElementById('btn-confirm-accept');
 
     function initApp() {
-        localStorage.removeItem('artist_chat_messages');
-        localStorage.removeItem('artist_chat_cleared_v2');
+        // sessionStorage로 상태 관리 세션 독립화
+        sessionStorage.removeItem('artist_chat_messages');
+        sessionStorage.removeItem('artist_chat_cleared_v2');
 
-        const persistedArtistMode = localStorage.getItem('artistMode');
+        const persistedArtistMode = sessionStorage.getItem('artistMode');
         if (persistedArtistMode === 'true') {
             currentMode = 'artist';
         } else {
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const val = loginPasswordInput.value;
         if (val === '1122') {
             currentMode = 'artist';
-            localStorage.setItem('artistMode', 'true');
+            sessionStorage.setItem('artistMode', 'true');
             applyModeState();
             closeLoginModal();
             renderMessages();
@@ -152,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleLogout() {
         closeMenu();
         currentMode = 'fan';
-        localStorage.setItem('artistMode', 'false');
+        sessionStorage.setItem('artistMode', 'false');
         applyModeState();
         renderMessages();
     }
