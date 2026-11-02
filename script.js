@@ -326,7 +326,7 @@ async function saveMessages(newMsg) {
             
             const cardHeader = document.createElement('div');
             cardHeader.classList.add('quoted-card-header');
-            cardHeader.innerHTML = '<strong class="highlight-artist">ARTIST</strong>의 답장';
+            cardHeader.innerHTML = '<strong class="highlight-artist">새미로</strong>의 답장';
 
             const cardBody = document.createElement('div');
             cardBody.classList.add('quoted-card-body');
