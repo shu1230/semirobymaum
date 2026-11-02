@@ -145,19 +145,6 @@ html, body {
     background-size: cover;
 }
 
-.snow-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('snow.gif') repeat center center;
-    background-size: cover;
-    mix-blend-mode: screen; /* 검은 배경 투명하게 합성 */
-    pointer-events: none; /* 채팅 클릭 및 터치 클릭 방해 금지 */
-    z-index: 999; /* 채팅 메시지 위, 헤더/푸터 아래 위치 */
-}
-
 .app-header {
     background-color: #FFF;
     border-bottom-left-radius: 20px;
@@ -826,7 +813,7 @@ body.mode-artist .selectable-target:active {
     height: 32px;
     border-radius: 50%;
     border: none;
-    background-color: #E5E5EA;
+    background-color: #ffddee;
     color: #333;
     font-size: 20px;
     cursor: pointer;
@@ -849,3 +836,55 @@ body.mode-artist .btn-attach-image {
 .mode-artist #btn-attach-image {
     display: inline-flex; /* 또는 display: flex; */
 }
+
+/* ===== 오버레이 영상 (.snow-overlay 대체) ===== */
+.overlay-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: screen;   /* 검은 배경 영상을 투명처럼 합성 (기존 눈 효과와 동일 방식) */
+    pointer-events: none;
+    z-index: 999;
+}
+.overlay-video.hidden { display: none; }
+
+/* ===== 메시지 길게 누르기(삭제) 시 텍스트 선택/콜아웃 방지 ===== */
+.message-group {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* ===== 설정 메뉴는 로그인 상태에서만 표시 ===== */
+#menu-opt-settings { display: none; }
+body.mode-artist #menu-opt-settings { display: block; }
+
+/* ===== 설정 모달 ===== */
+.settings-card { max-height: 85vh; overflow-y: auto; }
+.settings-section { margin-top: 16px; }
+.settings-label { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 8px; }
+.settings-row { display: flex; gap: 8px; align-items: center; }
+.settings-row input[type="text"] {
+    flex: 1; min-width: 0; height: 40px; padding: 0 12px;
+    
+    border: none; border-radius: 10px; background: #F2F2F7;
+    font-size: 15px; outline: none;
+}
+.btn-settings-small {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 40px; padding: 0 14px; border: none; border-radius: 10px;
+    background: #ffddee; color: #333; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.btn-settings-small.btn-ghost { background: #F2F2F7; }
+
+.segmented { display: flex; background: #F2F2F7; border-radius: 10px; padding: 3px; }
+.segmented label { flex: 1; }
+.segmented input { display: none; }
+.segmented span {
+    display: block; text-align: center; padding: 9px 0; border-radius: 8px;
+    font-size: 14px; font-weight: 600; color: #8E8E93; cursor: pointer;
+}
+.segmented input:checked + span { background: #fff; color: #000; box-shadow: 0 1px 4px rgba(0,0,0,0.12); }

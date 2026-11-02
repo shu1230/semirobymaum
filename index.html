@@ -15,12 +15,12 @@
 
             <div class="profile-content">
                 <div class="profile-avatar-wrapper">
-                    <img src="profile.png" alt="Profile" class="profile-avatar-img">
+                    <img src="profile.png" alt="Profile" class="profile-avatar-img js-profile-img">
                 </div>
 
                 <div class="profile-info">
                     <span class="artist-badge">ARTIST</span>
-                    <span class="profile-name">(*ᴗ͈ˬᴗ͈)ꕤ*.ﾟ</span>
+                    <span class="profile-name js-nickname">새미로</span>
                 </div>
             </div>
 
@@ -31,7 +31,7 @@
 
         <!-- SCREEN 2: CHAT CONTAINER -->
         <div id="screen-chat" class="screen">
-            <div class="snow-overlay"></div>
+            <video id="overlay-video" class="overlay-video hidden" muted loop autoplay playsinline preload="auto"></video>
             
             <!-- Normal Chat Header -->
             <header id="normal-header" class="app-header normal-header">
@@ -40,7 +40,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                     </button>
                     <div class="header-title-container">
-                        <div class="header-name">(*ᴗ͈ˬᴗ͈)ꕤ*.ﾟ</div>
+                        <div class="header-name js-nickname">새미로</div>
                         <div class="header-sub">
                             <span>𝒃𝒖𝒃𝒃𝒍𝒆</span>
                             <img src="heart.png" alt="heart" class="heart-icon heartbeat">
@@ -59,6 +59,7 @@
 
                 <!-- Dropdown Menu -->
                 <div id="chat-menu-dropdown" class="menu-dropdown hidden">
+                    <button class="menu-item" id="menu-opt-settings">설정</button>
                     <button class="menu-item" id="menu-opt-auth">🔐</button>
                 </div>
             </header>
@@ -88,7 +89,7 @@
             <!-- Active Reply Preview Bar -->
             <div id="reply-preview-bar" class="reply-preview-bar hidden">
                 <div class="reply-preview-content">
-                    <span class="reply-preview-title"><strong class="highlight-artist">ARTIST</strong>의 답장</span>
+                    <span class="reply-preview-title"><strong class="highlight-artist">마음</strong>의 답장</span>
                     <span id="reply-preview-text" class="reply-preview-text"></span>
                 </div>
                 <button id="btn-cancel-reply" class="icon-btn-sm" aria-label="Cancel Reply">
@@ -148,7 +149,7 @@
             </div>
         </div>
 
-        <!-- CUSTOM iOS-STYLE REPLY MODAL -->
+                <!-- CUSTOM iOS-STYLE REPLY MODAL -->
         <div id="confirm-reply-modal" class="modal-overlay hidden">
             <div class="modal-card confirm-modal-card">
                 <div class="confirm-modal-body">
@@ -161,7 +162,74 @@
             </div>
         </div>
 
+        <!-- SETTINGS MODAL -->
+        <div id="settings-modal" class="modal-overlay hidden">
+            <div class="modal-card settings-card">
+                <div class="modal-header">
+                    <h3 class="modal-title">설정</h3>
+                    <button id="btn-close-settings" class="icon-btn-sm" aria-label="Close Settings" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-label">닉네임</div>
+                    <div class="settings-row">
+                        <input type="text" id="settings-nickname" maxlength="20" placeholder="닉네임">
+                        <button type="button" id="btn-save-nickname" class="btn-settings-small">저장</button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-label">프로필 사진</div>
+                    <div class="settings-row">
+                        <label class="btn-settings-small" for="input-profile-img">사진 선택</label>
+                        <button type="button" class="btn-settings-small btn-ghost" data-reset="profileImg">기본값</button>
+                    </div>
+                    <input type="file" id="input-profile-img" accept="image/*" hidden>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-label">채팅 화면 배경</div>
+                    <div class="settings-row">
+                        <label class="btn-settings-small" for="input-chat-bg">사진 선택</label>
+                        <button type="button" class="btn-settings-small btn-ghost" data-reset="chatBg">기본값</button>
+                    </div>
+                    <input type="file" id="input-chat-bg" accept="image/*" hidden>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-label">프로필 화면 배경</div>
+                    <div class="settings-row">
+                        <label class="btn-settings-small" for="input-home-bg">사진 선택</label>
+                        <button type="button" class="btn-settings-small btn-ghost" data-reset="homeBg">기본값</button>
+                    </div>
+                    <input type="file" id="input-home-bg" accept="image/*" hidden>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-label">효과</div>
+                    <div class="segmented">
+                        <label><input type="radio" name="overlay-mode" value="none" checked><span>없음</span></label>
+                        <label><input type="radio" name="overlay-mode" value="snow"><span>눈</span></label>
+                        <label><input type="radio" name="overlay-mode" value="sakura"><span>벚꽃</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DELETE CONFIRM MODAL -->
+        <div id="delete-confirm-modal" class="modal-overlay hidden">
+            <div class="modal-card confirm-modal-card">
+                <div class="confirm-modal-body">
+                    <p class="confirm-modal-text">이 메시지를 삭제할까요?<br>모든 사용자에게서 사라져요.</p>
+                </div>
+                <div class="confirm-modal-actions">
+                    <button id="btn-delete-cancel" class="btn-confirm-action btn-confirm-cancel">취소</button>
+                    <button id="btn-delete-accept" class="btn-confirm-action btn-confirm-accept">삭제하기</button>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="script.js"></script>
-</body>
-</html>
